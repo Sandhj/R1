@@ -37,129 +37,14 @@ export ISP=$(cat /root/.isp);
 export CITY=$(cat /root/.city);
 source /etc/os-release
 
-function lane_atas() {
-echo -e "${BIBlue}┌──────────────────────────────────────────┐${NC}"
-}
-function lane_bawah() {
-echo -e "${BIBlue}└──────────────────────────────────────────┘${NC}"
-}
 
-function install_awalan(){
-animation() {
-    CMD[0]="$1"
-    CMD[1]="$2"
-    
-    (
-        # Hapus file fim jika ada
-        [[ -e $HOME/fim ]] && rm -f $HOME/fim
-        
-        # Jalankan perintah di background dan sembunyikan output
-        ${CMD[0]} -y >/dev/null 2>&1
-        ${CMD[1]} -y >/dev/null 2>&1
-        
-        # Buat file fim untuk menandakan selesai
-        touch $HOME/fim
-    ) >/dev/null 2>&1 &
+apt install build-essential -y && apt-get install -y jq && apt-get install shc && apt install -y bzip2 gzip coreutils screen curl >/dev/null 2>&1
 
-    tput civis # Sembunyikan kursor
-    echo -ne "  \033[0;32mProcces\033[1;37m - \033[0;33m["
-    
-    while true; do
-        for ((i = 0; i < 18; i++)); do
-            echo -ne "\033[97;1m#"
-            sleep 0.1
-        done
-        
-        # Jika file fim ada, hapus dan keluar dari loop
-        if [[ -e $HOME/fim ]]; then
-            rm -f $HOME/fim
-            break
-        fi
-        
-        echo -e "\033[0;31m]"
-        sleep 1
-        tput cuu1 # Kembali ke baris sebelumnya
-        tput dl1   # Hapus baris sebelumnya
-        echo -ne "  \033[0;32mProcess\033[1;37m- \033[0;31m["
-    done
-    
-    echo -e "\033[0;31m]\033[1;37m -\033[1;32m OK!\033[0m"
-    tput cnorm # Tampilkan kursor kembali
-}
-awalan(){
-  clear
-  apt install build-essential -y && apt-get install -y jq && apt-get install shc && apt install -y bzip2 gzip coreutils screen curl >/dev/null 2>&1
-}
-
-instalasi_awalan
-}
-
-function instalasi_awalan(){
-lane_atas
-echo -e "${BIBlue}│ ${BGCOLOR}         PROCCESS UPDATE UPGRADE        ${NC}${BIBlue} │${NC}"
-lane_bawah
-animation 'awalan'
-}
-
-install_awalan
-rm -rf /etc/rmbl
-mkdir -p /etc/rmbl
-mkdir -p /etc/rmbl/theme
 mkdir -p /var/lib/ >/dev/null 2>&1
 echo "IP=" >> /var/lib/ipvps.conf
 clear
-lane_atas
-echo -e "${BIBlue}│ ${BGCOLOR}             MASUKKAN NAMA KAMU         ${NC}${BIBlue} │${NC}"
-lane_bawah
-echo " "
-until [[ $name =~ ^[a-zA-Z0-9_.-]+$ ]]; do
-read -rp "Masukan Nama Kamu Disini ( tanpa spasi ): " -e name
-done
-rm -rf /root/.profil
-echo "$name" > /root/.profil
-echo ""
-clear
-author=$(cat /root/.profil)
-echo ""
-echo ""
 
-data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
-date_list=$(date +"%Y-%m-%d" -d "$data_server")
-url_izin="https://raw.githubusercontent.com/GeKaStore/permission/main/ip"
-client=$(curl -sS $url_izin | grep $MYIP | awk '{print $2}')
-exp=$(curl -sS $url_izin | grep $MYIP | awk '{print $3}')
-today=`date -d "0 days" +"%Y-%m-%d"`
-time=$(printf '%(%H:%M:%S)T')
-date=$(date +'%d-%m-%Y')
-d1=$(date -d "$exp" +%s)
-d2=$(date -d "$today" +%s)
-certifacate=$(((d1 - d2) / 86400))
-checking_sc() {
-  useexp=$(curl -s $url_izin | grep $MYIP | awk '{print $3}')
-  if [[ $date_list < $useexp ]]; then
-    echo -ne
-  else
-    clear
-    echo -e "\033[96m============================================\033[0m"
-    echo -e "\033[44;37m           NotAllowed Autoscript         \033[0m"    
-    echo -e "\033[96m============================================\033[0m"
-    echo -e "\e[95;1m buy / sewa AutoScript installer VPS \e[0m"
-    echo -e "\033[96m============================================\033[0m"    
-    echo -e "\e[96;1m   1 IP        : Rp.10.000   \e[0m"
-    echo -e "\e[96;1m   2 IP        : Rp.15.000   \e[0m"   
-    echo -e "\e[96;1m   7 IP        : Rp.40.000   \e[0m"
-    echo -e "\e[96;1m   Unli IP     : Rp.150.000  \e[0m"
-    echo -e "\e[97;1m   open source : Rp.400.000  \e[0m"       
-    echo -e ""
-    echo -e "\033[34m Contack WA/TLP: 087760204418     \033[0m"
-    echo -e "\033[34m Telegram user : t.me/WuzzSTORE \033[0m"    
-    echo -e "\033[96m============================================\033[0m"
-    exit 0
-  fi
-}
-checking_sc
 
-function ARCHITECTURE() {
 if [[ "$( uname -m | awk '{print $1}' )" == "x86_64" ]]; then
     echo -ne
 else
@@ -173,78 +58,16 @@ else
     echo -e " ${r}This Script only Support for OS ubuntu 20.04 & debian 10"
     exit 0
 fi
-}
-ARCHITECTURE
 clear
 
-function instalasi(){
-fun_bar() {
-    CMD[0]="$1"
-    CMD[1]="$2"
-    
-    (
-        # Hapus file fim jika ada
-        [[ -e $HOME/fim ]] && rm -f $HOME/fim
-        
-        # Jalankan perintah di background dan sembunyikan output
-        ${CMD[0]} -y >/dev/null 2>&1
-        ${CMD[1]} -y >/dev/null 2>&1
-        
-        # Buat file fim untuk menandakan selesai
-        touch $HOME/fim
-    ) >/dev/null 2>&1 &
-
-    tput civis # Sembunyikan kursor
-    echo -ne "  \033[0;32mProcces\033[1;37m - \033[0;33m["
-    
-    while true; do
-        for ((i = 0; i < 18; i++)); do
-            echo -ne "\033[97;1m#"
-            sleep 0.1
-        done
-        
-        # Jika file fim ada, hapus dan keluar dari loop
-        if [[ -e $HOME/fim ]]; then
-            rm -f $HOME/fim
-            break
-        fi
-        
-        echo -e "\033[0;31m]"
-        sleep 1
-        tput cuu1 # Kembali ke baris sebelumnya
-        tput dl1   # Hapus baris sebelumnya
-        echo -ne "  \033[0;32mProcess\033[1;37m- \033[0;31m["
-    done
-    
-    echo -e "\033[0;31m]\033[1;37m -\033[1;32m OK!\033[0m"
-    tput cnorm # Tampilkan kursor kembali
-}
-
-domain_setup(){
-wget https://raw.githubusercontent.com/GeKaStore/autoscript-vip/main/install/rmbl.sh && chmod +x rmbl.sh && ./rmbl.sh
-clear
-}
 
 cd
-echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
-echo -e "${BIBlue}│ \033[1;37mPlease select a your Choice to Set Domain${BIBlue}│${NC}"
-echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
-echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
-echo -e "${BIBlue}│  [ 1 ]  \033[1;37mDomain kamu sendiri       ${NC}"
-echo -e "${BIBlue}│  [ 2 ]  \033[1;37mDomain random             ${NC}"
-echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
-until [[ $domain =~ ^[132]+$ ]]; do 
-read -p "   Please select numbers 1  atau 2 : " domain
-done
-if [[ $domain == "1" ]]; then
-clear
-lane_atas
-echo -e  "${BIBlue}│              \033[1;37mSETUP DOMAIN                ${BIBlue}│${NC}"
-lane_bawah
-echo " "
-until [[ $dnss =~ ^[a-zA-Z0-9_.-]+$ ]]; do 
+echo -e "╭══════════════════════════════════════════╮"
+echo -e "│ INSERT YOUR DOMAIN BELOW"
+echo -e "╰══════════════════════════════════════════╯"
 read -rp "Masukan domain kamu Disini : " -e dnss
-done
+
+
 rm -rf /etc/xray
 rm -rf /etc/v2ray
 rm -rf /etc/nsdomain
@@ -263,56 +86,9 @@ echo "$dnss" > /etc/v2ray/scdomain
 echo "$dnss" > /etc/xray/domain
 echo "$dnss" > /etc/v2ray/domain
 echo "IP=$dnss" > /var/lib/ipvps.conf
-echo ""
 cd
 sleep 1
 clear
-rm /root/subdomainx
-clear
-fi
-if [[ $domain == "2" ]]; then
-clear
-lane_atas
-echo -e "${BIBlue}│ \033[1;37mPlease select a your Choice to Set Domain${BIBlue}│${NC}"
-lane_bawah
-lane_atas
-echo -e "${BIBlue}│  [ 1 ]  \033[1;37mDomain gekastore.me          ${NC}"
-lane_bawah
-until [[ $domain2 =~ ^[1-5]+$ ]]; do 
-read -p "   Please select numbers 1 sampai 1 : " domain2
-done
-fi
-if [[ $domain2 == "1" ]]; then
-clear
-lane_atas
-echo -e  "${BIBlue}│  \033[1;37mContoh subdomain nama.gekastore.me        ${BIBlue}│${NC}"
-echo -e  "${BIBlue}│    \033[1;37mnama jadi subdomain kamu              ${BIBlue}│${NC}"
-lane_bawah
-echo " "
-until [[ $dn1 =~ ^[a-zA-Z0-9_.-]+$ ]]; do
-read -rp "Masukan subdomain kamu Disini tanpa spasi : " -e dn1
-done
-rm -rf /etc/xray
-rm -rf /etc/v2ray
-rm -rf /etc/nsdomain
-rm -rf /etc/per
-mkdir -p /etc/xray
-mkdir -p /etc/v2ray
-mkdir -p /etc/nsdomain
-mkdir -p /etc/per
-touch /etc/per/id
-touch /etc/per/token
-touch /etc/xray/domain
-touch /etc/v2ray/domain
-touch /etc/xray/slwdomain
-touch /etc/v2ray/scdomain
-echo "$dn1" > /root/subdomainx
-cd
-sleep 1
-fun_bar 'domain_setup'
-clear
-rm /root/subdomainx
-fi
 
 inst_tools(){
 cd
