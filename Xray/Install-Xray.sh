@@ -1,49 +1,18 @@
 #!/bin/bash
-# ==========================================
-# Color
-RED='\033[0;31m'
-NC='\033[0m'
-GREEN='\033[0;32m'
-ORANGE='\033[0;33m'
-BLUE='\033[0;34m'
-PURPLE='\033[0;35m'
-CYAN='\033[0;36m'
-LIGHT='\033[0;37m'
-# ==========================================
-# Getting
 
-echo -e "
-"
-date
-echo ""
+
 cd
-if [[ -e /etc/xray/domain ]]; then
-domain=$(cat /etc/xray/domain)
-else
-domain="casper1.dev"
-fi
-sleep 0.5
 mkdir -p /etc/xray
-echo -e "[ ${green}INFO${NC} ] Checking... "
+domain=$(cat /etc/xray/domain)
+
 apt install iptables iptables-persistent -y
-sleep 0.5
-echo -e "[ ${green}INFO$NC ] Setting ntpdate"
 ntpdate pool.ntp.org
 timedatectl set-ntp true
-sleep 0.5
-echo -e "[ ${green}INFO$NC ] Enable chronyd"
-systemctl enable chronyd
-systemctl restart chronyd
-sleep 0.5
-echo -e "[ ${green}INFO$NC ] Enable chrony"
 systemctl enable chrony
 systemctl restart chrony
 timedatectl set-timezone Asia/Jakarta
-sleep 0.5
-echo -e "[ ${green}INFO$NC ] Setting chrony tracking"
 chronyc sourcestats -v
 chronyc tracking -v
-echo -e "[ ${green}INFO$NC ] Setting dll"
 apt clean all && apt update
 apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils lsb-release -y
 apt install socat cron bash-completion ntpdate -y
