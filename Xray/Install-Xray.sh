@@ -24,7 +24,7 @@ apt install curl pwgen openssl netcat cron -y
 
 # install xray
 sleep 0.5
-echo -e "[ ${green}INFO$NC ] Downloading & Installing xray core"
+echo -e "Downloading & Installing xray core"
 domainSock_dir="/run/xray";! [ -d $domainSock_dir ] && mkdir  $domainSock_dir
 chown www-data.www-data $domainSock_dir
 # Make Folder XRay
@@ -536,10 +536,10 @@ sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_pass grpc://127.0.0.1:30310;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-echo -e "$yell[SERVICE]$NC Restart All service"
+echo -e " Restart All service"
 systemctl daemon-reload
 sleep 0.5
-echo -e "[ ${green}ok${NC} ] Enable & restart xray "
+echo -e " Enable & restart xray "
 systemctl daemon-reload
 systemctl enable xray
 systemctl restart xray
@@ -547,14 +547,9 @@ systemctl restart nginx
 systemctl enable runn
 systemctl restart runn
 
-sleep 0.5
-yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
-yellow "xray/Vmess"
-yellow "xray/Vless"
-
 mv /root/domain /etc/xray/
 if [ -f /root/scdomain ];then
 rm /root/scdomain > /dev/null 2>&1
 fi
 clear
-rm -f ins-xray.sh
+rm -f Install-Xray.sh
