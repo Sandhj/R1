@@ -134,9 +134,9 @@ cd
 mkdir /home/vps
 mkdir /home/vps/public_html
 wget -O /home/vps/public_html/index.html "https://raw.githubusercontent.com/Paper890/mysc/main/ssh/multiport"
-wget -O /home/vps/public_html/.htaccess "https://raw.githubusercontent.com/Paper890/mysc/main/ssh/.htaccess"
 mkdir /home/vps/public_html/ss-ws
 mkdir /home/vps/public_html/clash-ws
+
 # install badvpn
 cd
 wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/Paper890/mysc/main/ssh/newudpgw"
@@ -166,9 +166,8 @@ sed -i '/Port 22/a Port 200' /etc/ssh/sshd_config
 sed -i 's/#Port 22/Port 22/g' /etc/ssh/sshd_config
 /etc/init.d/ssh restart
 
-echo "=== Install Dropbear ==="
 # install dropbear
-#apt -y install dropbear
+apt install dropbear -y
 sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=143/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 50000 -p 109 -p 110 -p 69"/g' /etc/default/dropbear
@@ -179,7 +178,7 @@ echo "/usr/sbin/nologin" >> /etc/shells
 
 cd
 # install stunnel
-#apt install stunnel4 -y
+apt install stunnel4 -y
 cat > /etc/stunnel/stunnel.conf <<-END
 cert = /etc/stunnel/stunnel.pem
 client = no
