@@ -118,7 +118,18 @@ chmod 644 /root/.profile
 curl -sS ifconfig.me > /etc/myipvps
 
 # // Informasi Script 
+TEXT="
+**********************************************
+*                                            *
+*   🚀 TERIMA KASIH TELAH MENGGUNAKAN        *
+*       SCRIPT INI!                          *
+*                                            *
+*   © 2025 - Script By San                   *
+*                                            *
+**********************************************
+"
 
+echo -e "$TEXT"
 
 # // Hapus File Instalasi 
 rm /root/*
