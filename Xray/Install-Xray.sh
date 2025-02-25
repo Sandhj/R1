@@ -471,9 +471,6 @@ sleep 1
 domainSock_dir="/run/xray";! [ -d $domainSock_dir ] && mkdir  $domainSock_dir
 chown www-data.www-data $domainSock_dir
 
-wget -q -O /usr/bin/crtxray "https://raw.githubusercontent.com/Paper890/mysc/main/xray/crt.sh" && chmod +x /usr/bin/crtxray 
-
-
 mv /root/domain /etc/xray/ 
 if [ -f /root/scdomain ];then
 rm /root/scdomain > /dev/null 2>&1
