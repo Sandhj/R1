@@ -1,8 +1,6 @@
 #!/bin/bash
-#
-# ==================================================
 
-# initializing var
+# // Buat Variable
 export DEBIAN_FRONTEND=noninteractive
 MYIP=$(wget -qO- ipinfo.io/ip);
 MYIP2="s/xxxxxxxxx/$MYIP/g";
@@ -10,7 +8,7 @@ NET=$(ip -o $ANU -4 route show to default | awk '{print $5}');
 source /etc/os-release
 ver=$VERSION_ID
 
-#detail nama perusahaan
+# // detail nama perusahaan
 country=ID
 state=INDONESIA
 locality=JAWATENGAH
@@ -19,14 +17,14 @@ organizationalunit=Blogger
 commonname=none
 email=admin@sedang.my.id
 
-# simple password minimal
+# // simple password minimal
 curl -sS https://raw.githubusercontent.com/Paper890/mysc/main/ssh/password | openssl aes-256-cbc -d -a -pass pass:scvps07gg -pbkdf2 > /etc/pam.d/common-password
 chmod +x /etc/pam.d/common-password
 
-# go to root
+# // Root
 cd
 
-# Edit file /etc/systemd/system/rc-local.service
+# // Edit file /etc/systemd/system/rc-local.service
 cat > /etc/systemd/system/rc-local.service <<-END
 [Unit]
 Description=/etc/rc.local
@@ -62,24 +60,16 @@ systemctl start rc-local.service
 echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
 sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local
 
-#update
+# // Update System
 apt update -y
 apt upgrade -y
 apt dist-upgrade -y
 apt-get remove --purge ufw firewalld -y
 apt-get remove --purge exim4 -y
-
-#install jq
 apt -y install jq
-
-#install shc
 apt -y install shc
-
-# install wget and curl
 apt install python -y
 apt -y install wget curl
-
-#figlet
 apt-get install figlet -y
 apt-get install ruby -y
 gem install lolcat
