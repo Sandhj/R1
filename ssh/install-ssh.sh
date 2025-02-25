@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# // Buat Variable
+# initializing var
 export DEBIAN_FRONTEND=noninteractive
 MYIP=$(wget -qO- ipinfo.io/ip);
 MYIP2="s/xxxxxxxxx/$MYIP/g";
@@ -8,23 +8,14 @@ NET=$(ip -o $ANU -4 route show to default | awk '{print $5}');
 source /etc/os-release
 ver=$VERSION_ID
 
-# // detail nama perusahaan
-country=ID
-state=INDONESIA
-locality=JAWATENGAH
-organization=Blogger
-organizationalunit=Blogger
-commonname=none
-email=admin@sedang.my.id
-
-# // simple password minimal
+# simple password minimal
 curl -sS https://raw.githubusercontent.com/Paper890/mysc/main/ssh/password | openssl aes-256-cbc -d -a -pass pass:scvps07gg -pbkdf2 > /etc/pam.d/common-password
 chmod +x /etc/pam.d/common-password
 
-# // Root
+# go to root
 cd
 
-# // Edit file /etc/systemd/system/rc-local.service
+# Edit file /etc/systemd/system/rc-local.service
 cat > /etc/systemd/system/rc-local.service <<-END
 [Unit]
 Description=/etc/rc.local
@@ -60,7 +51,7 @@ systemctl start rc-local.service
 echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
 sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local
 
-# // Update System
+#update
 apt update -y
 apt upgrade -y
 apt dist-upgrade -y
@@ -80,7 +71,7 @@ ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 # set locale
 sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
 
-# // Install SSL
+
 install_ssl(){
     if [ -f "/usr/bin/apt-get" ];then
             isDebian=`cat /etc/issue|grep Debian`
@@ -114,6 +105,7 @@ install_ssl(){
         sleep 3s
     fi
 }
+install_ssl
 
 # install webserver
 apt -y install nginx
@@ -131,11 +123,6 @@ rm /etc/nginx/conf.d/default.conf
 systemctl daemon-reload
 service nginx restart
 cd
-mkdir /home/vps
-mkdir /home/vps/public_html
-wget -O /home/vps/public_html/index.html "https://raw.githubusercontent.com/Paper890/mysc/main/ssh/multiport"
-mkdir /home/vps/public_html/ss-ws
-mkdir /home/vps/public_html/clash-ws
 
 # install badvpn
 cd
@@ -167,7 +154,7 @@ sed -i 's/#Port 22/Port 22/g' /etc/ssh/sshd_config
 /etc/init.d/ssh restart
 
 # install dropbear
-apt install dropbear -y
+apt  install dropbear -y
 sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=143/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 50000 -p 109 -p 110 -p 69"/g' /etc/default/dropbear
@@ -220,12 +207,14 @@ apt -y install fail2ban
 
 # Instal DDOS Flate
 clear
+
 wget -q -O /usr/local/ddos/ddos.conf http://www.inetbase.com/scripts/ddos/ddos.conf
 wget -q -O /usr/local/ddos/LICENSE http://www.inetbase.com/scripts/ddos/LICENSE
 wget -q -O /usr/local/ddos/ignore.ip.list http://www.inetbase.com/scripts/ddos/ignore.ip.list
 wget -q -O /usr/local/ddos/ddos.sh http://www.inetbase.com/scripts/ddos/ddos.sh
 chmod 0755 /usr/local/ddos/ddos.sh
 cp -s /usr/local/ddos/ddos.sh /usr/local/sbin/ddos
+
 /usr/local/ddos/ddos.sh --cron > /dev/null 2>&1
 
 # banner /etc/issue.net
@@ -236,50 +225,6 @@ chmod +x /etc/issue.net
 echo "Banner /etc/issue.net" >> /etc/ssh/sshd_config
 sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
 
-# download script
-cd /usr/bin
-wget -O speedtest "https://raw.githubusercontent.com/FranataVPN/src/ipuk/ssh/speedtest_cli.py"
-wget -O xp "https://raw.githubusercontent.com/Paper890/mysc/main/ssh/xp.sh"
-wget -O auto-set "https://raw.githubusercontent.com/Paper890/mysc/main/xray/auto-set.sh"
-chmod +x speedtest
-chmod +x xp
-chmod +x auto-set
-cd
-
-cat > /etc/cron.d/re_otm <<-END
-SHELL=/bin/sh
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 7 * * * root /sbin/reboot
-END
-
-cat > /etc/cron.d/xp_otm <<-END
-SHELL=/bin/sh
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-2 0 * * * root /usr/bin/xp
-END
-
-cat > /home/re_otm <<-END
-7
-END
-
-service cron restart >/dev/null 2>&1
-service cron reload >/dev/null 2>&1
-
-# remove unnecessary files
-sleep 1
-echo -e "[ ${green}INFO$NC ] Clearing trash"
-apt autoclean -y >/dev/null 2>&1
-
-if dpkg -s unscd >/dev/null 2>&1; then
-apt -y remove --purge unscd >/dev/null 2>&1
-fi
-
-# apt-get -y --purge remove samba* >/dev/null 2>&1
-# apt-get -y --purge remove apache2* >/dev/null 2>&1
-# apt-get -y --purge remove bind9* >/dev/null 2>&1
-# apt-get -y remove sendmail* >/dev/null 2>&1
-# apt autoremove -y >/dev/null 2>&1
-# finishing
 cd
 chown -R www-data:www-data /home/vps/public_html
 sleep 1
