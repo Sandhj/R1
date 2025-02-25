@@ -7,11 +7,10 @@ yell='\e[1;33m'
 tyblue='\e[1;36m'
 NC='\e[0m'
 
+# // Buat Direktori Utama
 cd /root
 mkdir -p /etc/xray
-mkdir -p /etc/ssnvpn
-mkdir -p /etc/ssnvpn/theme
-mkdir -p /var/lib/ssnvpn-pro >/dev/null 2>&1
+
 # SET DOMAIN
 echo -e "${red}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
     echo -e "${red}    ♦️${NC} ${green} CUSTOM SETUP DOMAIN VPS     ${NC}"
