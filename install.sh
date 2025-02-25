@@ -46,58 +46,12 @@ fi
 # // Set Local Time GMT +7
 start=$(date +%s)
 ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
+
+# // Disable Ipv6
 sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
 sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null 2>&1
 
-
-cat> /root/.profile << END
-# ~/.profile: executed by Bourne-compatible login shells.
-
-if [ "$BASH" ]; then
-  if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
-  fi
-fi
-
-mesg n || true
-clear
-END
-chmod 644 /root/.profile
-
-echo -e "[ ${green}INFO${NC} ] Preparing the install file"
-apt install git curl -y >/dev/null 2>&1
-echo -e "[ ${green}INFO${NC} ] Allright good ... installation file is ready"
-sleep 2
-echo -ne "[ ${green}INFO${NC} ] Check permission : "
-
-PERMISSION
-if [ -f /home/needupdate ]; then
-red "Your script need to update first !"
-exit 0
-elif [ "$res" = "Permission Accepted..." ]; then
-green "Permission Accepted!"
-else
-red "Permission Denied!"
-rm setup.sh > /dev/null 2>&1
-sleep 10
-exit 0
-fi
-sleep 3
-
-if [ -f "/etc/xray/domain" ]; then
-echo ""
-echo -e "[ ${green}INFO${NC} ] Script Already Installed"
-echo -ne "[ ${yell}WARNING${NC} ] Do you want to install again ? (y/n)? "
-read answer
-if [ "$answer" == "${answer#[Yy]}" ] ;then
-rm setup.sh
-sleep 10
-exit 0
-else
-clear
-fi
-fi
-
+# // Install GoTop & BBR Plus
     # > pasang gotop
     gotop_latest="$(curl -s https://api.github.com/repos/xxxserxxx/gotop/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
     gotop_link="https://github.com/xxxserxxx/gotop/releases/download/v$gotop_latest/gotop_v"$gotop_latest"_linux_amd64.deb"
@@ -108,70 +62,45 @@ fi
     wget -qO /tmp/bbr.sh "${REPO}server/bbr.sh" >/dev/null 2>&1
     chmod +x /tmp/bbr.sh && bash /tmp/bbr.sh
 
-echo ""
+# // Install Dependencies
 wget -q https://raw.githubusercontent.com/Paper890/mysc/main/dependencies.sh;chmod +x dependencies.sh;./dependencies.sh
 rm dependencies.sh
 clear
-
-#THEME RED
-cat <<EOF>> /etc/ssnvpn/theme/red
-BG : \E[40;1;41m
-TEXT : \033[0;31m
-EOF
-#THEME BLUE
-cat <<EOF>> /etc/ssnvpn/theme/blue
-BG : \E[40;1;44m
-TEXT : \033[0;34m
-EOF
-#THEME GREEN
-cat <<EOF>> /etc/ssnvpn/theme/green
-BG : \E[40;1;42m
-TEXT : \033[0;32m
-EOF
-#THEME YELLOW
-cat <<EOF>> /etc/ssnvpn/theme/yellow
-BG : \E[40;1;43m
-TEXT : \033[0;33m
-EOF
-#THEME MAGENTA
-cat <<EOF>> /etc/ssnvpn/theme/magenta
-BG : \E[40;1;43m
-TEXT : \033[0;33m
-EOF
-#THEME CYAN
-cat <<EOF>> /etc/ssnvpn/theme/cyan
-BG : \E[40;1;46m
-TEXT : \033[0;36m
-EOF
-#THEME CONFIG
-cat <<EOF>> /etc/ssnvpn/theme/color.conf
-blue
-EOF
     
-#install ssh ovpn
+# // Install SSH
 echo -e "$green[INFO]$NC Install SSH"
 sleep 2
 clear
 wget https://raw.githubusercontent.com/Paper890/mysc/main/ssh/ssh-vpn.sh && chmod +x ssh-vpn.sh && ./ssh-vpn.sh
-#Instal Xray
+clear
+
+# // Instal Xray
 echo -e "$green[INFO]$NC Install XRAY!"
 sleep 2
 clear
 wget https://raw.githubusercontent.com/Paper890/mysc/main/xray/ins-xray.sh && chmod +x ins-xray.sh && ./ins-xray.sh
 clear
+
+# // Install Set BR
 echo -e "$green[INFO]$NC Install SET-BR!"
 wget https://raw.githubusercontent.com/Paper890/mysc/main/backup/set-br.sh && chmod +x set-br.sh && ./set-br.sh
 clear
+
+# // Install Websocket
 echo -e "$green[INFO]$NC Install WEBSOCKET!"
 wget https://raw.githubusercontent.com/Paper890/mysc/main/websocket/insshws.sh && chmod +x insshws.sh && ./insshws.sh
 clear
 wget https://raw.githubusercontent.com/Paper890/mysc/main/websocket/nontls.sh && chmod +x nontls.sh && ./nontls.sh
 clear
-echo -e "$green[INFO]$NC Download Extra Menu"
+
+# // Install Menu
+echo -e "$green[INFO]$NC Download Menu"
 sleep 2
 wget https://raw.githubusercontent.com/Paper890/mysc/main/update/update.sh && chmod +x update.sh && ./update.sh
 rm -f update.sh
 clear
+
+
 ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 clear
 cat> /root/.profile << END
