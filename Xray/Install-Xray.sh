@@ -1,10 +1,5 @@
 #!/bin/bash
-# =========================================
-# Quick Setup | Script Setup Manager
-# Edition : Stable Edition V1.0
-# Auther  : NevermoreSSH
-# (C) Copyright 2022
-# =========================================
+
 # // Export Color & Information
 export RED='\033[0;31m'
 export GREEN='\033[0;32m'
@@ -27,14 +22,6 @@ export RECEIVE="[${YELLOW} RECEIVE ${NC}]"
 export BOLD="\e[1m"
 export WARNING="${RED}\e[5m"
 export UNDERLINE="\e[4m"
-
-# // Exporting URL Host
-export Server_URL="raw.githubusercontent.com/NevermoreSSH/Blueblue/main/test"
-export Server1_URL="raw.githubusercontent.com/NevermoreSSH/Blueblue/main/limit"
-export Server_Port="443"
-export Server_IP="underfined"
-export Script_Mode="Stable"
-export Auther=".geovpn"
 
 # // Root Checking
 if [ "${EUID}" -ne 0 ]; then
@@ -189,7 +176,6 @@ alias acme.sh=~/.acme.sh/acme.sh
 chown -R nobody:nogroup /etc/xray
 chmod 644 /etc/xray/xray.crt
 chmod 644 /etc/xray/xray.key
-echo -e "${OKEY} Your Domain : $domain"
 
 # nginx renew ssl
 echo -n '#!/bin/bash
