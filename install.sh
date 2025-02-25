@@ -147,18 +147,13 @@ wget https://raw.githubusercontent.com/NevermoreSSH/Blueblue/main/cf.sh && chmod
 
 sleep 2
 
-#install jembot
+
+#install Vnstat
 echo -e "$white\033[0;34m┌─────────────────────────────────────────┐${NC}"
-echo -e "                          ⇱ INSTALL DOMAIN ⇲            "
-echo -e "$white\033[0;34m└─────────────────────────────────────────┘${NC}"
-sleep 1
-wget https://raw.githubusercontent.com/NevermoreSSH/Blueblue/main/cf.sh && chmod +x cf.sh && ./cf.sh
-#install jembot
-echo -e "$white\033[0;34m┌─────────────────────────────────────────┐${NC}"
-echo -e " \E[41;1;39m           ⇱ Install Jembot ⇲            \E[0m$NC"
+echo -e " \E[41;1;39m           ⇱ Install Vnstat ⇲            \E[0m$NC"
 echo -e "$white\033[0;34m└─────────────────────────────────────────┘${NC}"
 sleep 1 
-wget -q https://raw.githubusercontent.com/NevermoreSSH/Blueblue/main/jembot.sh && chmod +x jembot.sh && ./jembot.sh
+wget -q https://raw.githubusercontent.com/NevermoreSSH/Blueblue/main/vnstat.sh && chmod +x vnstat.sh && ./vnstat.sh
 #install ssh-vpn
 echo -e "$white\033[0;34m┌─────────────────────────────────────────┐${NC}"
 echo -e " \E[41;1;39m          ⇱ Install SSH / WS ⇲           \E[0m$NC"
