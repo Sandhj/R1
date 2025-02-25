@@ -26,11 +26,6 @@ apt -y install chrony
 apt install zip -y
 apt install curl pwgen openssl netcat cron -y
 
-
-# install xray
-sleep 1
-domainSock_dir="/run/xray";! [ -d $domainSock_dir ] && mkdir  $domainSock_dir
-chown www-data.www-data $domainSock_dir
 # Make Folder XRay
 mkdir -p /var/log/xray
 mkdir -p /etc/xray
@@ -473,7 +468,9 @@ systemctl enable runn
 systemctl restart runn
 
 sleep 1
-wget -q -O /usr/bin/auto-set "https://raw.githubusercontent.com/Paper890/mysc/main/xray/auto-set.sh" && chmod +x /usr/bin/auto-set 
+domainSock_dir="/run/xray";! [ -d $domainSock_dir ] && mkdir  $domainSock_dir
+chown www-data.www-data $domainSock_dir
+
 wget -q -O /usr/bin/crtxray "https://raw.githubusercontent.com/Paper890/mysc/main/xray/crt.sh" && chmod +x /usr/bin/crtxray 
 
 
