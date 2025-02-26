@@ -1,6 +1,4 @@
 #!/bin/bash
-#
-# ==================================================
 
 # initializing var
 export DEBIAN_FRONTEND=noninteractive
@@ -10,17 +8,11 @@ NET=$(ip -o $ANU -4 route show to default | awk '{print $5}');
 source /etc/os-release
 ver=$VERSION_ID
 
-#detail nama perusahaan
-country=ID
-state=INDONESIA
-locality=JAWATENGAH
-organization=Blogger
-organizationalunit=Blogger
-commonname=none
-email=admin@sedang.my.id
+#Link Hosting 
+GITHUB="https://raw.githubusercontent.com/Paper890/mysc/main/"
 
 # simple password minimal
-curl -sS https://raw.githubusercontent.com/Paper890/mysc/main/ssh/password | openssl aes-256-cbc -d -a -pass pass:scvps07gg -pbkdf2 > /etc/pam.d/common-password
+curl -sS ${GITHUB}ssh/password | openssl aes-256-cbc -d -a -pass pass:scvps07gg -pbkdf2 > /etc/pam.d/common-password
 chmod +x /etc/pam.d/common-password
 
 # go to root
