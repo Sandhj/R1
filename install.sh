@@ -26,19 +26,6 @@ sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null 2>&1
 
 apt install git curl -y >/dev/null 2>&1
 
-
-
-
-    # > pasang gotop
-    gotop_latest="$(curl -s https://api.github.com/repos/xxxserxxx/gotop/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
-    gotop_link="https://github.com/xxxserxxx/gotop/releases/download/v$gotop_latest/gotop_v"$gotop_latest"_linux_amd64.deb"
-    curl -sL "$gotop_link" -o /tmp/gotop.deb
-    dpkg -i /tmp/gotop.deb >/dev/null 2>&1
-
-    # > Pasang BBR Plus
-    wget -qO /tmp/bbr.sh "${REPO}server/bbr.sh" >/dev/null 2>&1
-    chmod +x /tmp/bbr.sh && bash /tmp/bbr.sh
-
 echo ""
 wget -q https://raw.githubusercontent.com/Paper890/mysc/main/dependencies.sh;chmod +x dependencies.sh;./dependencies.sh
 rm dependencies.sh
