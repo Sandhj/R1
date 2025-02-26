@@ -71,9 +71,13 @@ wget https://raw.githubusercontent.com/Paper890/mysc/main/xray/ins-xray.sh && ch
 echo -e "Install WEBSOCKET!"
 wget https://raw.githubusercontent.com/Paper890/mysc/main/websocket/insshws.sh && chmod +x insshws.sh && ./insshws.sh
 wget https://raw.githubusercontent.com/Paper890/mysc/main/websocket/nontls.sh && chmod +x nontls.sh && ./nontls.sh
-
+#Install Menu
+echo -e "Install Menu"
+wget https://raw.githubusercontent.com/Paper890/mysc/main/update/menu.sh && chmod +x menu.sh && ./menu.sh
 # // Setup Default Menu
 clear
+
+
 cat> /root/.profile << END
 # ~/.profile: executed by Bourne-compatible login shells.
 
