@@ -8,6 +8,15 @@ NET=$(ip -o $ANU -4 route show to default | awk '{print $5}');
 source /etc/os-release
 ver=$VERSION_ID
 
+#detail nama perusahaan
+country=ID
+state=INDONESIA
+locality=JAWATENGAH
+organization=Blogger
+organizationalunit=Blogger
+commonname=none
+email=admin@sedang.my.id
+
 #Link Hosting 
 GITHUB="https://raw.githubusercontent.com/Paper890/mysc/main/"
 
