@@ -153,12 +153,6 @@ chmod +x /etc/issue.net
 echo "Banner /etc/issue.net" >> /etc/ssh/sshd_config
 sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
 
-# Download additional scripts
-cd /usr/bin
-wget -O xp "${GITHUB}ssh/xp.sh"
-wget -O auto-set "${GITHUB}xray/auto-set.sh"
-chmod +x xp auto-set
-
 # Cleanup
 apt autoclean -y
 apt autoremove -y
